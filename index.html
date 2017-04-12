@@ -10,11 +10,12 @@
   <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <script type="text/javascript" src="assets/javascript/games.js"></script>
 </head>
 
 <body>
 <div class="panel panel-default">
-  <div class="panel-heading">Shallow Sea Residents
+  <div class="panel-heading"><h1>Shallow Sea Residents</h1>
   </div> 
 
   <div class="panel-body">
@@ -32,13 +33,12 @@
         <section class="sidebar">
           <div id="connect">
             <h3 id="gameStatus">Press any key to get started!</h3>
-
-           <!--  <p id="gameStatus"></p> -->
-            <h4>Currect word:</h4>
+            <h3/>
+            <h4>Wins currect word:</h4>
             <p id="currectWord"></p>
-            <h4>Number of Guesses Remaining: (# of guesses remaining for the user)</h4>
+            <h4>Number of Guesses Remaining: </h4>
             <p id="numOfGuessRemaining"></p>
-            <h4>Letters Already Guessed: (Letters the user has guessed, displayed like L Z Y H)</h4>
+            <h4>Letters Already Guessed: </h4>
             <p id="lettersGuessed"></p>
           </div>
         </section>
@@ -53,149 +53,5 @@
     </footer> 
   </div>
   </div> <!-- panel panel-default -->
-
-  <script type="text/javascript">
-    var shallowSeaResidents = ["dolphin", "green turtle",
-        "dugong", "blue tang", "clown fish",
-        "stingray", "great white shark", "shark", "humpback whale",
-        "whale", "pygmy seahorse", "coral reef snake", "sea snake"
-        ];
-
-    var shallowSeaResidentsImgs = {
-        "coral":"Coral_Reef.jpg", //default
-        "dolphin":"bottlenose-dolphin.jpg",
-        "green turtle":"Green_Sea_Turtle.jpg",
-        "dugong":"dugong.jpg", 
-        "blue tang":"blue_tang.jpg", 
-        "clown fish":"Clown_fish.jpg", 
-        "stingray":"stingray.jpg",
-        "great white shark":"greatshark.jpg", 
-        "shark":"greatshark.jpg",
-        "humpback whale":"HumpbackWhale.jpg",
-        "whale":"HumpbackWhale.jpg", 
-        "pygmy seahorse":"pygmy-seahorse.jpg", 
-        "coral reef snake":"seasnake.jpeg", 
-        "sea snake":"seasnake.jpeg"
-        };
-
-    var gameIncident = {
-        isGameOver: false,
-        areYouWin: false,
-        wordSpaceHolder: "",
-        wordToGuess: "",
-        numOfGuessAllowed: 0,
-        lettersTypied: "",
-        numberOfLetterMatched: 0,
-        imgsrc: "",
-        init: function(){
-          console.log("Enter init......................");
-          this.isGameOver=false;
-          var randomOptionIndex = Math.floor(Math.random() * shallowSeaResidents.length);
-          //console.log("randomOptionIndex:" + randomOptionIndex);
-          this.wordToGuess = shallowSeaResidents[randomOptionIndex];
-          this.imgsrc = shallowSeaResidentsImgs["coral"];
-          this.wordSpaceHolder="_";
-          for(var i = 0; i < this.wordToGuess.length - 1; i++){
-            this.wordSpaceHolder += " _";
-          }
-          this.areYouWin = false;
-          this.numOfGuessAllowed = this.wordToGuess.length * 2;
-          this.lettersTypied = "";
-          this.numberOfLetterMatched = 0;
-          console.log("Exit init......................");
-      /*console.log("isGameOver:" + gameIncident.isGameOver);
-      console.log("ameStatus:" + gameIncident.gameStatus);
-      console.log("wordToGuess:" + gameIncident.wordToGuess);
-      console.log("wordSpaceHolder:" + gameIncident.wordSpaceHolder);
-      console.log("numOfGuessRemaining:" + gameIncident.numOfGuessAllowed);
-      console.log("lettersTypied:" + gameIncident.lettersTypied);
-      console.log("numberOfLetterMatched:" + gameIncident.numberOfLetterMatched);
-      console.log("................inside.............................");*/
-        } ,
-
-        checkMatch: function(letter){
-          console.log("Enter checkMatch......................");
-          this.lettersTypied += letter + " ";
-          this.numOfGuessAllowed--;
-          letter = letter.toLowerCase();
-          //console.log("typed: " + letter);
-          //console.log("lettersTypied: " + this.lettersTypied);
-          console.log("this.wordToGuess:" + this.wordToGuess);
-          console.log("this.wordSpaceHolder:" + this.wordSpaceHolder);
-          var wordSpaceHolderCopy="";
-          for(var i = 0; i < this.wordToGuess.length; i++){
-            //console.log("i:"+i);
-             if(letter == this.wordToGuess[i]) {
-               //this.wordSpaceHolder[i * 2] = letter;
-               this.numberOfLetterMatched++;
-               wordSpaceHolderCopy+=letter+" ";
-               //console.log("match:" + letter);
-             }
-             else{
-              wordSpaceHolderCopy+=this.wordSpaceHolder[i*2]+" ";
-              //console.log("not match:" + letter);
-             }
-          }
-          console.log("wordSpaceHolderCopy:" + wordSpaceHolderCopy);
-          this.wordSpaceHolder=wordSpaceHolderCopy.trim();
-          if(this.numberOfLetterMatched == this.wordToGuess.length){
-            this.isGameOver = true;
-            this.areYouWin = true;
-            this.imgsrc = shallowSeaResidentsImgs[this.wordToGuess];
-          } else {
-            if(this.numOfGuessAllowed <= 0) {
-              this.isGameOver = true;
-              this.areYouWin = false;
-            }
-          }
-          console.log("Exit checkMatch......................");
-        }
-    };
-
-    function handleKeyUp(event){
-            console.log("entered:" + event.key);
-    }
-
-    function toDoThis(event){
-      console.log("Enter toDoThis.....................................................");
-      if(gameIncident.isGameOver){
-        gameIncident.init();
-        document.getElementById("gameStatus").innerHTML = "Press any key to get started!";
-      }
-      else{
-        var keyTypied = event.key;
-        //console.log("key entered: "+keyTypied);
-        gameIncident.checkMatch(keyTypied);
-        if(gameIncident.isGameOver){
-          var msg = "Press any key to get started again!"
-          if(gameIncident.areYouWin){
-              msg = "You Win! " + msg;
-          } else {
-              msg = "You lost. " + msg;
-          }
-           document.getElementById("gameStatus").innerHTML = msg;
-        }
-      }
-
-      console.log("isGameOver:" + gameIncident.isGameOver);
-      console.log("ameStatus:" + gameIncident.areYouWin);
-      console.log("wordToGuess:" + gameIncident.wordToGuess);
-      console.log("wordSpaceHolder:" + gameIncident.wordSpaceHolder);
-      console.log("numOfGuessRemaining:" + gameIncident.numOfGuessAllowed);
-      console.log("lettersTypied:" + gameIncident.lettersTypied);
-      console.log("numberOfLetterMatched:" + gameIncident.numberOfLetterMatched);
-
-      document.getElementById("currectWord").innerHTML = gameIncident.wordSpaceHolder;
-      document.getElementById("numOfGuessRemaining").innerHTML = gameIncident.numOfGuessAllowed;
-      document.getElementById("lettersGuessed").innerHTML = gameIncident.lettersTypied;
-      document.getElementById("gameImg").src = "assets/images/"+gameIncident.imgsrc;
-
-      console.log("Exit toDoThis......................................................");
-    }
-
-    gameIncident.init();
-
-    document.onkeyup = toDoThis;
-  </script>
 </body>
 </html>
