@@ -33,6 +33,7 @@
           var randomOptionIndex = Math.floor(Math.random() * shallowSeaResidents.length);
           //console.log("randomOptionIndex:" + randomOptionIndex);
           this.wordToGuess = shallowSeaResidents[randomOptionIndex];
+          console.log("this.wordToGuess:" + this.wordToGuess);
           this.imgsrc = shallowSeaResidentsImgs["coral"];
           this.wordSpaceHolder="_";
           for(var i = 0; i < this.wordToGuess.length - 1; i++){
@@ -54,14 +55,14 @@
         } ,
 
         checkMatch: function(letter){
-          console.log("Enter checkMatch......................");
+          //console.log("Enter checkMatch......................");
 
           this.numOfGuessAllowed--;
           letter = letter.toLowerCase();
           //console.log("typed: " + letter);
           //console.log("lettersTypied: " + this.lettersTypied);
-          console.log("this.wordToGuess:" + this.wordToGuess);
-          console.log("this.wordSpaceHolder:" + this.wordSpaceHolder);
+          // console.log("this.wordToGuess:" + this.wordToGuess);
+          //console.log("this.wordSpaceHolder:" + this.wordSpaceHolder);
           var wordSpaceHolderCopy="";
           for(var i = 0; i < this.wordToGuess.length; i++){
             //console.log("i:"+i);
@@ -69,14 +70,14 @@
                //this.wordSpaceHolder[i * 2] = letter;
                this.numberOfLetterMatched++;
                wordSpaceHolderCopy+=letter+" ";
-               console.log("match:" + letter);
+               // console.log("match:" + letter);
              }
              else{
               wordSpaceHolderCopy+=this.wordSpaceHolder[i*2]+" ";
-              console.log("not match:" + letter);
+              // console.log("not match:" + letter);
              }
           }
-          console.log("wordSpaceHolderCopy:" + wordSpaceHolderCopy);
+          // console.log("wordSpaceHolderCopy:" + wordSpaceHolderCopy);
           this.wordSpaceHolder=wordSpaceHolderCopy.trim();
           this.lettersTypied += letter.toUpperCase() + " ";
           if(this.numberOfLetterMatched == this.wordToGuess.length){
@@ -85,11 +86,13 @@
             this.imgsrc = shallowSeaResidentsImgs[this.wordToGuess];
           } else {
             if(this.numOfGuessAllowed <= 0) {
-              this.isGameOver = true;
-              this.areYouWin = false;
+                this.isGameOver = true;
+                this.areYouWin = false;
             }
           }
-          console.log("Exit checkMatch......................");
+          // console.log("isGameOver:"+ this.isGameOver);
+          // console.log("areYouWin:"+ this.areYouWin);
+          //console.log("Exit checkMatch......................");
         }
     };
 
@@ -118,13 +121,13 @@
         }
       }
 
-      console.log("isGameOver:" + gameIncident.isGameOver);
-      console.log("ameStatus:" + gameIncident.areYouWin);
-      console.log("wordToGuess:" + gameIncident.wordToGuess);
-      console.log("wordSpaceHolder:" + gameIncident.wordSpaceHolder);
-      console.log("numOfGuessRemaining:" + gameIncident.numOfGuessAllowed);
-      console.log("lettersTypied:" + gameIncident.lettersTypied);
-      console.log("numberOfLetterMatched:" + gameIncident.numberOfLetterMatched);
+      //console.log("isGameOver:" + gameIncident.isGameOver);
+      //console.log("areYouWin:" + gameIncident.areYouWin);
+      // console.log("wordToGuess:" + gameIncident.wordToGuess);
+      // console.log("wordSpaceHolder:" + gameIncident.wordSpaceHolder);
+      // console.log("numOfGuessRemaining:" + gameIncident.numOfGuessAllowed);
+      // console.log("lettersTypied:" + gameIncident.lettersTypied);
+      //console.log("numberOfLetterMatched:" + gameIncident.numberOfLetterMatched);
 
       document.getElementById("currectWord").innerHTML = gameIncident.wordSpaceHolder;
       document.getElementById("numOfGuessRemaining").innerHTML = gameIncident.numOfGuessAllowed;
